@@ -48,13 +48,19 @@ var gameConfig={
 
 /*=====  End of Variables  ======*/
 
-
+0
 /*====================================
 =            Game Status             =
 ====================================*/
-
+noseX = "";
+noseY = "";
+GameStatus = "";
+function startGame(){
+  GameStatus = "start"
+  document.getElementById("status").innerHTML = "Game is Loading"
+}
 function game(){
-
+console.log("noseX"+noseX+"noseY"+noseY )
   instializeInDraw();
   moveEnvironment(mario);
   drawSprites();
@@ -67,7 +73,7 @@ function game(){
     fill(255, 255, 255);
     textSize(40);
     textAlign(CENTER);
-    text("Press Any Arrow Keys to Start and Play ", gameConfig.screenX/2, gameConfig.screenY/2);
+    text("Press Play button to Play ", gameConfig.screenX/2, gameConfig.screenY/2);
     textSize(40);
 
     stroke(255);
@@ -115,7 +121,7 @@ function game(){
 
 // change game status if any key is pressed
 function changeGameStatud(character){
-  if((keyDown(control.up) ||keyDown(control.left)||keyDown(control.right) )&& gameConfig.status==="start") {
+  if (GameStatus =="start" && noseX !="" && gameConfig.status==="start") {
     world_start.play();
     initializeCharacterStatus(mario);
     gameConfig.status= "play";
@@ -279,15 +285,15 @@ function autoControl(character){
 function manualControl(character){
   
   if(character.live){
-    if(keyDown(control.left)){
+    if(noseX<300){
       character.velocity.x-=gameConfig.moveSpeed;
       character.changeAnimation('move');
       character.mirrorX(-1);
     }
 
-    if(keyDown(control.right)){
+    if(noseX>300){
       character.velocity.x+=gameConfig.moveSpeed;
-      character.changeAnimation('move');
+      character.changeAnimation('move');+
       character.mirrorX(1);
     }
 
@@ -300,7 +306,7 @@ function manualControl(character){
 
 /* Movements of character */
 function jumping(character){
-	if( (keyWentDown(control.up)&&character.live) || (touchIsDown&&character.live) ){
+	if((noseY<200&&character.live) || (touchIsDown&&character.live) ){
 		character.velocity.y+=gameConfig.jump;
 	}
 }
